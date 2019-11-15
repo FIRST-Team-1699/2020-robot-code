@@ -1,5 +1,6 @@
 language: java
 install:
+  - chmod +x ./gradlew
   - ./gradlew build --scan -s
 script:
   - ./gradlew test --scan -s
