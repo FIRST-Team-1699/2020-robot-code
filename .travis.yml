@@ -2,7 +2,6 @@ language: java
 install:
   - gradle build
 script:
-  - gradle
   - gradle test
 jdk:
   - oraclejdk11
