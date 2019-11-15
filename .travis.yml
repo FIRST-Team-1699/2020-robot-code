@@ -4,9 +4,9 @@ before_install:
   - cd robot-code
   - chmod +x gradlew
 install:
-  - ./gradlew build --scan
+  - ./gradlew build
 script:
-  - ./gradlew test --scan
+  - ./gradlew test
   - yes
 jdk:
   - oraclejdk11
