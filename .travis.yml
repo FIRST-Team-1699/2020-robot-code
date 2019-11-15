@@ -1,10 +1,9 @@
 language: java
-before_intall:
+before_install:
   - cd /robot-code
+  - chmod +x gradlew
 install:
   - ./gradlew build --scan -s
-before_script:
-  - cd /robot-code
 script:
   - ./gradlew test --scan -s
 jdk:
