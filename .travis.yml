@@ -1,6 +1,6 @@
 language: java
 install:
-  - gradle wpi
+  - gradle build
 script:
   - gradle
 jdk:
