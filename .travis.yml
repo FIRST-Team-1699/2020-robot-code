@@ -1,7 +1,5 @@
+sudo: false
 language: java
-install:
-  - ./gradlew build --scan -s
-script:
-  - ./gradlew test --scan -s
-jdk:
-  - oraclejdk11
+install: true
+script: ./gradlew build
+jdk: oraclejdk11
