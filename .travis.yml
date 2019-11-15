@@ -1,6 +1,7 @@
 language: java
+before_install:
+- chmod +x gradlew
 install:
-  - chmod +x ./gradlew
   - ./gradlew build --scan -s
 script:
   - ./gradlew test --scan -s
