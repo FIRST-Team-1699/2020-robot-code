@@ -25,3 +25,4 @@ hs_err_pid*
 robot-code/.idea/misc.xml
 robot-code/.idea/modules.xml
 *.iml
+robot-code/.idea/uiDesigner.xml
