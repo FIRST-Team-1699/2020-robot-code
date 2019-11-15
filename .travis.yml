@@ -1,5 +1,6 @@
 language: java
 before_install:
+  - ls
   - cd /robot-code
   - chmod +x gradlew
 install:
