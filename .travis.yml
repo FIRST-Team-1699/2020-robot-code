@@ -4,4 +4,4 @@ install:
 script:
   - gradle
 jdk:
-  - oraclejdk8
+  - oraclejdk11
