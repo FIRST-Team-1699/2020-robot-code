@@ -1,7 +1,7 @@
 language: java
 install:
-  - ./gradlew build
+  - ./gradlew build --scan -s
 script:
-  - ./gradlew test
+  - ./gradlew test --scan -s
 jdk:
   - oraclejdk11
