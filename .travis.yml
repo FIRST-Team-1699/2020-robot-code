@@ -1,7 +1,7 @@
 language: java
 install:
-  - gradlew build
+  - ./gradlew build
 script:
-  - gradlew test
+  - ./gradlew test
 jdk:
   - oraclejdk11
