@@ -20,17 +20,37 @@ public class Logger implements Runnable{
     private final Queue<String> toLog;
     private boolean running = false;
     private Thread thread;
+    private int ticks = 0;
+    private final FileWriter writer; 
 
     private Logger(){
         alwaysLogged = new ArrayList<>();
         toLog = new ConcurrentLinkedQueue<>();
+	try{
+		writer = new FileWriter("/home/lvuser/logs/" + Timestamp.from(Instant.now()).toString() + ".txt"); 
+	}catch (Expection e){
+		e.printStackTrace();
+	}
     }
 
     @Override
     public void run() {
         while(running){
-            //TODO log
+	    //Writes to the log every 20 ticks
+	    if(ticks % 20 == 0){
+		   //Log
+		   for(Loggable l : alwaysLogged){
+			  writer.write(l.getLogOutput());
+		   }
+		   writer.write(toLog.poll());
+		   writer.flush(); //We only want to flush where the writer has stuff in it
+	    }
+	    ticks++;
         }
+    }
+
+    public synchronized void close(){
+	    writer.close();
     }
 
     public synchronized void start(){
