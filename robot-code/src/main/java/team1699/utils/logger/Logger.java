@@ -1,15 +1,20 @@
 package team1699.utils.logger;
 
-import java.util.ArrayList;
+import java.util.ArrayList;	
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.io.FileWriter;
+import java.lang.Exception;
+import java.io.IOException;
 
 public class Logger implements Runnable{
 
     private static Logger instance;
 
-    public Logger getInstance(){
+    public Logger getInstance() throws Exception{
         if(instance == null){
             instance = new Logger();
         }
@@ -23,14 +28,10 @@ public class Logger implements Runnable{
     private int ticks = 0;
     private final FileWriter writer; 
 
-    private Logger(){
+    private Logger() throws Exception{
         alwaysLogged = new ArrayList<>();
         toLog = new ConcurrentLinkedQueue<>();
-	try{
-		writer = new FileWriter("/home/lvuser/logs/" + Timestamp.from(Instant.now()).toString() + ".txt"); 
-	}catch (Expection e){
-		e.printStackTrace();
-	}
+	writer = new FileWriter("/home/lvuser/logs/" + Timestamp.from(Instant.now()).toString() + ".txt"); 
     }
 
     @Override
@@ -39,18 +40,26 @@ public class Logger implements Runnable{
 	    //Writes to the log every 20 ticks
 	    if(ticks % 20 == 0){
 		   //Log
-		   for(Loggable l : alwaysLogged){
-			  writer.write(l.getLogOutput());
+		   try{
+		   	for(Loggable l : alwaysLogged){
+				writer.write(l.getLogOutput());
+			}
+			writer.write(toLog.poll());
+		   	writer.flush(); //We only want to flush where the writer has stuff in it
+		   }catch(IOException e){
+			   e.printStackTrace();
 		   }
-		   writer.write(toLog.poll());
-		   writer.flush(); //We only want to flush where the writer has stuff in it
 	    }
 	    ticks++;
         }
     }
 
     public synchronized void close(){
-	    writer.close();
+	    try{
+		    writer.close();
+	    }catch(IOException e){
+		    e.printStackTrace();
+	    }
     }
 
     public synchronized void start(){
