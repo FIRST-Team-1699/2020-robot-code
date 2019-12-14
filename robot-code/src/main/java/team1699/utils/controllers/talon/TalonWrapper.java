@@ -12,7 +12,7 @@ public class TalonWrapper extends BetterSpeedController{
 	}
 
 	public void set(final double percent){
-
+		talon.set(percent);
 	}
 
 	public double get(){
