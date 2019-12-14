@@ -16,6 +16,6 @@ public class TalonWrapper extends BetterSpeedController{
 	}
 
 	public double get(){
-		return 0;
+		return talon.get();
 	}
 }
