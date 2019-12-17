@@ -8,6 +8,10 @@ public class SpeedControllerGroup{
 	private BetterSpeedController master;
 	private List<BetterSpeedController> controllers;
 
+	public SpeedControllerGroup(final BetterSpeedController master){
+		this.master = master;
+	}
+
 	public SpeedControllerGroup(final BetterSpeedController master, BetterSpeedController ... controllers){
 		this.master = master;
 		this.controllers = new ArrayList<>();
