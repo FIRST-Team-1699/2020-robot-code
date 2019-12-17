@@ -28,7 +28,7 @@ public class DriveTrain{
 			//First quadrant, else second quadrant
 			//
 			//double maxInput = Math.copySign(Math.max(Math.abs(throttle), Math.abs(rotate)), throttle);
-			//
+			
 			//if(throttle >=){
 			////First quadrant, else second quadrant
 			if(rotate >= 0.0){
@@ -47,5 +47,8 @@ public class DriveTrain{
 				starOutput = maxInput;
 			}
 		}
+
+		portDrive.set(portOutput);
+		starDrive.set(starOutput);
 	}
 }
