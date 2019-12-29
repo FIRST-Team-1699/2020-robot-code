@@ -12,7 +12,43 @@ public class DriveTrain{
 		this.starDrive = starDrive;
 	}
 
-	public void update(final double joystickX, final double joystickY){
+	//TODO Change to use DriveSignal
+	//WPILib Differential Drive
+	public void update(double throttle, double rotate){
+		double portOutput = 0.0;
+		double starOutput = 0.0;
 
+		//TODO add deadband
+		throttle = Math.copySign(throttle * throttle, throttle);
+		rotate = Math.copySign(rotate * rotate, rotate);
+		
+		double maxInput = Math.copySign(Math.max(Math.abs(throttle), Math.abs(rotate)), throttle);
+
+		if(throttle >= 0.0){
+			//First quadrant, else second quadrant
+			//
+			//double maxInput = Math.copySign(Math.max(Math.abs(throttle), Math.abs(rotate)), throttle);
+			
+			//if(throttle >=){
+			////First quadrant, else second quadrant
+			if(rotate >= 0.0){
+				portOutput = maxInput;
+				starOutput = throttle - rotate;
+			}else{
+				portOutput = throttle + rotate;
+				starOutput = maxInput;
+			}
+		}else{
+			if(rotate >= 0.0){
+				portOutput = maxInput;
+				starOutput = throttle - rotate;
+			}else{
+				portOutput = throttle + rotate;
+				starOutput = maxInput;
+			}
+		}
+
+		portDrive.set(portOutput);
+		starDrive.set(starOutput);
 	}
 }
