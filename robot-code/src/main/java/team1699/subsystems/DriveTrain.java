@@ -6,13 +6,11 @@ public class DriveTrain{
 
 	private SpeedControllerGroup portDrive, starDrive;
 
-	//TODO Figure out best way to pass in controllers so that it is flexable
 	public DriveTrain(final SpeedControllerGroup portDrive, final SpeedControllerGroup starDrive){
 		this.portDrive = portDrive;
 		this.starDrive = starDrive;
 	}
 
-	//TODO Change to use DriveSignal
 	//WPILib Differential Drive
 	public void update(double throttle, double rotate){
 		double portOutput = 0.0;
@@ -25,11 +23,6 @@ public class DriveTrain{
 		double maxInput = Math.copySign(Math.max(Math.abs(throttle), Math.abs(rotate)), throttle);
 
 		if(throttle >= 0.0){
-			//First quadrant, else second quadrant
-			//
-			//double maxInput = Math.copySign(Math.max(Math.abs(throttle), Math.abs(rotate)), throttle);
-			
-			//if(throttle >=){
 			////First quadrant, else second quadrant
 			if(rotate >= 0.0){
 				portOutput = maxInput;
