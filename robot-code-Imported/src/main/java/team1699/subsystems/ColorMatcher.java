@@ -73,17 +73,17 @@ public class ColorMatcher {
         String colorString;
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
-        // if (match.color == kBlueTarget) {
-        //     colorString = "Blue";
-        // } else if (match.color == kRedTarget) {
-        //     colorString = "Red";
-        // } else if (match.color == kGreenTarget) {
-        //     colorString = "Green";
-        // } else if (match.color == kYellowTarget) {
-        //     colorString = "Yellow";
-        // } else {
-        //     colorString = "Unknown";
-        // }
+         if (match.color == kBlueTarget) {
+             colorString = "Blue";
+         } else if (match.color == kRedTarget) {
+             colorString = "Red";
+         } else if (match.color == kGreenTarget) {
+             colorString = "Green";
+         } else if (match.color == kYellowTarget) {
+             colorString = "Yellow";
+         } else {
+             colorString = "Unknown";
+         }
         /**
          * Open Smart Dashboard or Shuffleboard to see the color detected by the Sensor.
          */         

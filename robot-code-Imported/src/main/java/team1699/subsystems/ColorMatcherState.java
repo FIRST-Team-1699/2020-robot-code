@@ -18,9 +18,7 @@ public class ColorMatcherState {
         switch(previousColor){
 
             case "Unknown":
-                switch colorMatcher.
-                case :
-                colorState = "yellow";
+                
                 break;
 
             case "Blue":
