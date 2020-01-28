@@ -1,4 +1,6 @@
-public class Motor775Pro{
+package team1699.utils.motors;
+
+public class Motor775Pro {
 
 	//Stall Torque in N*m
 	public static final double kStallTorque = 0.71;

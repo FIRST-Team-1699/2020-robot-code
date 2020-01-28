@@ -1,7 +1,8 @@
 package team1699.utils.controllers.talon;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import team1699.utils.controllers.BetterSpeedController;
 
 public class TalonWrapper extends BetterSpeedController{
