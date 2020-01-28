@@ -8,27 +8,27 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class Robot extends TimedRobot {
 
     private Joystick mDriveJoystick;
-    
+
     private TalonFX mPortMaster, mPortSlave1, mPortSlave2, mStarMaster, mStarSlave1, mStarSlave2;
 
     @Override
     public void robotInit() {
         //Setup port drive motors
-        mPortMaster = new TalonFX(32);
-        mPortSlave1 = new TalonFX(33);
+        mPortMaster = new TalonFX(10);
+        mPortSlave1 = new TalonFX(11);
         mPortSlave1.follow(mPortMaster);
-        //mPortSlave2 = new TalonFX(12);
-        //mPortSlave2.follow(mPortMaster);
+        mPortSlave2 = new TalonFX(12);
+        mPortSlave2.follow(mPortMaster);
 
         //Setup starboard drive motors
-        mStarMaster = new TalonFX(30);
+        mStarMaster = new TalonFX(13);
         mStarMaster.setInverted(true);
-        mStarSlave1 = new TalonFX(31);
+        mStarSlave1 = new TalonFX(14);
         mStarSlave1.follow(mStarMaster);
         mStarSlave1.setInverted(true);
-        //mStarSlave2 = new TalonFX(15);
-        //mStarSlave2.follow(mStarMaster);
-        //mStarSlave2.setInverted(true);
+        mStarSlave2 = new TalonFX(15);
+        mStarSlave2.follow(mStarMaster);
+        mStarSlave2.setInverted(true);
 
         //Setup joystick
         mDriveJoystick = new Joystick(0);
@@ -36,12 +36,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-       //mPortMaster.set(TalonFXControlMode.PercentOutput, .15);
-       // mStarMaster.set(TalonFXControlMode.PercentOutput, .15);
         update(mDriveJoystick.getX(), mDriveJoystick.getY());
     }
-
-
 
     //WPILib Differential Drive
     private void update(double throttle, double rotate){
@@ -66,9 +62,9 @@ public class Robot extends TimedRobot {
         }else{
             if(rotate >= 0.0){
                 portOutput = maxInput;
-                starOutput = throttle + rotate;
+                starOutput = throttle - rotate;
             }else{
-                portOutput = throttle - rotate;
+                portOutput = throttle + rotate;
                 starOutput = maxInput;
             }
         }
