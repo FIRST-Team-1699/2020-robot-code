@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
         mStarMaster.setInverted(true);
         mStarSlave1 = new TalonFX(31);
         mStarSlave1.follow(mStarMaster);
-mStarSlave1.setInverted(true);
+        mStarSlave1.setInverted(true);
         //mStarSlave2 = new TalonFX(15);
         //mStarSlave2.follow(mStarMaster);
         //mStarSlave2.setInverted(true);
