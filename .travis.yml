@@ -7,6 +7,5 @@ install:
   - ./gradlew build
 script:
   - ./gradlew test
-  - yes
 jdk:
   - oraclejdk11
