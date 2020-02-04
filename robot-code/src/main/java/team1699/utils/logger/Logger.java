@@ -12,7 +12,7 @@ import java.io.FileWriter;
 import java.lang.Exception;
 import java.io.IOException;
 
-public class Logger implements Runnable{
+public class Logger implements Runnable {
 
     private static Logger instance;
 
