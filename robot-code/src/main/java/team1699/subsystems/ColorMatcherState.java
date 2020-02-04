@@ -1,15 +1,11 @@
 package team1699.subsystems;
 
-import edu.wpi.first.wpilibj.util.Color;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-
 public class ColorMatcherState {
     private String previousColor;
     private String currentColor;
 
-    public void ColorMatcherState()
-    {
+    //TODO Make sure this is what Seth meant
+    public ColorMatcherState(String currentColor){
         this.currentColor = currentColor;
         this.previousColor = "Unknown";
     } 
