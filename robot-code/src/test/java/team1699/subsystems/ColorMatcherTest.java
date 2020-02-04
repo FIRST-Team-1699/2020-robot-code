@@ -5,7 +5,7 @@ import org.junit.Test;
 public class ColorMatcherTest {
 
     @Test
-    public void TestChooseColor(){
+    public void testChooseColor(){
 
     }
 }

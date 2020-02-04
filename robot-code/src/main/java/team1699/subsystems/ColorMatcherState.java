@@ -10,7 +10,7 @@ public class ColorMatcherState {
         this.previousColor = "Unknown";
     } 
 
-    public void Run(){
+    public void run(){
         switch(previousColor){
 
             case "Unknown":
