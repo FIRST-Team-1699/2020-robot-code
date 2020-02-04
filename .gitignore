@@ -26,3 +26,7 @@ robot-code/.idea/misc.xml
 robot-code/.idea/modules.xml
 *.iml
 robot-code/.idea/uiDesigner.xml
+robot-code/.idea/gradle.xml
+robot-code/.idea/vcs.xml
+robot-code/.idea/compiler.xml
+robot-code/.idea/jarRepositories.xml
