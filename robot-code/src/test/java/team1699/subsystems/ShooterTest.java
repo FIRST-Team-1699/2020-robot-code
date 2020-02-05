@@ -91,12 +91,13 @@ public class ShooterTest {
 
         private double velocity = 0.0;
 
+        //TODO Develop and add equation
         private double getAcceleration(final double voltage){
             return 0.0;
         }
 
         private double getVelocity(){
-            return 0.0;
+            return velocity;
         }
     }
 
