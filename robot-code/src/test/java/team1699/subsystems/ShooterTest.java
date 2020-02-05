@@ -38,7 +38,7 @@ public class ShooterTest {
             //TODO Change to get voltage for simController
             final double voltage = 0.0;
             //final double voltage = shooter.update(simShooter.getVelocity(), true);
-            pw.write(String.format("%f, %f, %f, %f, %f, %f, %f, %f\n", currentTime, simShooter.velocity, voltage, simShooter.velocity, simShooter.getAcceleration(voltage), elevator.getFilteredGoal(), simShooter.limitTriggered() ? 1.0 : 0.0, elevator.lastError));
+            pw.write(String.format("%f, %f, %f, %f, %f, %f, %f\n", currentTime, simShooter.velocity, voltage, simShooter.velocity, simShooter.getAcceleration(voltage), shooter.filteredGoal, shooter.lastError));
             simulateTime(voltage, ShooterSim.kDt);
             currentTime += ShooterSim.kDt;
             pw.flush();

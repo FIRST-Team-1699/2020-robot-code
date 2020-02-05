@@ -21,6 +21,7 @@ public class SpeedControllerGroup{
 		}
 	}
 
+	//TODO Need to convert to use voltage instead of percent
 	public void set(final double percent){
 		this.master.set(percent);
 		for(BetterSpeedController controller : controllers){

@@ -1,5 +1,6 @@
 package team1699.subsystems;
 
+import team1699.utils.Utils;
 import team1699.utils.controllers.SpeedControllerGroup;
 
 public class Shooter {
@@ -13,8 +14,8 @@ public class Shooter {
     private final SpeedControllerGroup controllerGroup;
     private double goal = 0.0; //TODO Figure out units
     private ShooterState state = ShooterState.UNINITIALIZED;
-    private double lastError = 0.0;
-    private double filteredGoal = 0.0; //TODO Figure out if we need this
+    double lastError = 0.0;
+    double filteredGoal = 0.0;
 
     static final double kDt = 0.05;
 
@@ -39,17 +40,36 @@ public class Shooter {
         this.controllerGroup = controllerGroup;
     }
 
-    //TODO Do we need enabled
     public void update(double encoderRate, final boolean enabled){
         switch(state){
             case UNINITIALIZED:
+                if(enabled){
+                    state = ShooterState.RUNNING;
+                    filteredGoal = encoderRate;
+                }
                 break;
             case RUNNING:
+                filteredGoal = goal;
                 break;
             case ESTOPPED:
+                //TODO Figure out what to do here
                 break;
             default:
+                state = ShooterState.UNINITIALIZED;
                 break;
+        }
+
+        final double error = filteredGoal - encoderRate;
+        final double vel = (error - lastError) / kDt;
+        lastError = error;
+        double voltage = Kp * error + Kv * vel;
+
+        final double maxVoltage = state == ShooterState.RUNNING ? kMaxVoltage : kMaxZeroingVoltage;
+
+        if(voltage >= maxVoltage){
+            controllerGroup.set(maxVoltage);
+        }else {
+            controllerGroup.set(Math.max(voltage, -maxVoltage));
         }
     }
 
@@ -59,5 +79,14 @@ public class Shooter {
 
     public double getGoal(){
         return goal;
+    }
+
+    /**
+     * Checks if the shooter had reached target velocity
+     * @return True if we have reached the target velocity, false otherwise
+     */
+    public boolean atGoal() {
+        //TODO Check tolerance
+        return Utils.epsilonEquals(lastError, 0, 0.05);
     }
 }
