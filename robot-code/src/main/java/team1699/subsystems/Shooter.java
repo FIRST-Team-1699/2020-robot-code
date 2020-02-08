@@ -32,8 +32,8 @@ public class Shooter {
     static final double kMaxZeroingVoltage = 4.0;
 
     //Control loop constants
-    static final double Kp = 60.0;
-    static final double Kv = 100.0;
+    static final double Kp = 40.0;
+    static final double Kv = 0.01;
 
     //TODO Add a constructor so we don't have to use a group?
     public Shooter(SpeedControllerGroup controllerGroup){
@@ -67,7 +67,7 @@ public class Shooter {
         final double maxVoltage = state == ShooterState.RUNNING ? kMaxVoltage : kMaxZeroingVoltage;
 
         if(voltage >= maxVoltage){
-            controllerGroup.set(maxVoltage);
+            controllerGroup.set(Math.min(voltage, maxVoltage));
         }else {
             controllerGroup.set(Math.max(voltage, -maxVoltage));
         }

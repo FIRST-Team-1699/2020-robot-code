@@ -1,5 +1,6 @@
 package team1699.utils.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,9 +17,7 @@ public class SpeedControllerGroup{
 	public SpeedControllerGroup(final BetterSpeedController master, BetterSpeedController ... controllers){
 		this.master = master;
 		this.controllers = new ArrayList<>();
-		for(BetterSpeedController c : controllers){
-			this.controllers.add(c);
-		}
+		this.controllers.addAll(Arrays.asList(controllers));
 	}
 
 	//TODO Need to convert to use voltage instead of percent

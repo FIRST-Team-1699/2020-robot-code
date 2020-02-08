@@ -1,7 +1,9 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -10,6 +12,7 @@ public class Robot extends TimedRobot {
     private Joystick mDriveJoystick;
     
     private TalonFX mPortMaster, mPortSlave1, mPortSlave2, mStarMaster, mStarSlave1, mStarSlave2;
+    private TalonSRX testCim;
 
     @Override
     public void robotInit() {
@@ -32,6 +35,8 @@ public class Robot extends TimedRobot {
 
         //Setup joystick
         mDriveJoystick = new Joystick(0);
+
+        testCim = new TalonSRX(15);
     }
 
     @Override
@@ -39,6 +44,7 @@ public class Robot extends TimedRobot {
        //mPortMaster.set(TalonFXControlMode.PercentOutput, .15);
        // mStarMaster.set(TalonFXControlMode.PercentOutput, .15);
         update(mDriveJoystick.getX(), mDriveJoystick.getY());
+        testCim.set(ControlMode.PercentOutput, 30);
     }
 
 
