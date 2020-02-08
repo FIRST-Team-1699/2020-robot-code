@@ -23,13 +23,13 @@ public class MotorConstants {
     //TODO Calculate values
     public class MotorDual775Pro{
         //Stall Torque in N*m
-        public static final double kStallTorque = 0.71 * 2.00; //TODO Check
+        public static final double kStallTorque = 0.71 * 2.00;
         //Stall Current in Amps
-        public static final double kStallCurrent = 134.0 * 2.00; //TODO Check
+        public static final double kStallCurrent = 134.0;
         //Free Speed in RPMs
         public static final double kFreeSpeed = 18730.0;
         //Free Current in Amps
-        public static final double kFreeCurrent = 0.7 * 2.00; //TODO Check
+        public static final double kFreeCurrent = 0.7;
         //Resistance of the motor
         public static final double kResistance = 12.0 / kStallTorque;
         //Motor Velocity Constant
@@ -58,13 +58,13 @@ public class MotorConstants {
     //TODO Check values
     public static class MotorDualCIM{
         //Stall Torque in N*m
-        public static final double kStallTorque = 2.41 * 2.00; //TODO Check
+        public static final double kStallTorque = 2.41 * 2.00;
         //Stall Current in Amps
-        public static final double kStallCurrent = 131.0 * 2.00; //TODO Check
+        public static final double kStallCurrent = 131.0;
         //Free Speed in RPMs
         public static final double kFreeSpeed = 18730.0;
         //Free Current in Amps
-        public static final double kFreeCurrent = 2.7 * 2.00; //TODO Check
+        public static final double kFreeCurrent = 2.7;
         //Resistance of the motor
         public static final double kResistance = 12.0 / kStallTorque;
         //Motor Velocity Constant
@@ -93,13 +93,13 @@ public class MotorConstants {
     //TODO Check values
     public static class MotorDualFalcon{
         //Stall Torque in N*m
-        public static final double kStallTorque = 4.69 * 2.00; //TODO Check
+        public static final double kStallTorque = 4.69 * 2.00;
         //Stall Current in Amps
-        public static final double kStallCurrent = 257.0 * 2.00; //TODO Check
+        public static final double kStallCurrent = 257.0;
         //Free Speed in RPMs
         public static final double kFreeSpeed = 6380.0;
         //Free Current in Amps
-        public static final double kFreeCurrent = 1.5 * 2.00; //TODO Check
+        public static final double kFreeCurrent = 1.5;
         //Resistance of the motor
         public static final double kResistance = 12.0 / kStallTorque;
         //Motor Velocity Constant
