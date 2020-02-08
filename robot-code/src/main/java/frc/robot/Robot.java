@@ -15,17 +15,20 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         //Setup port drive motors
         mPortMaster = new TalonFX(32);
+        mPortMaster.setInverted(true);
         mPortSlave1 = new TalonFX(33);
         mPortSlave1.follow(mPortMaster);
+        mPortSlave1.setInverted(true);
         //mPortSlave2 = new TalonFX(12);
         //mPortSlave2.follow(mPortMaster);
 
         //Setup starboard drive motors
         mStarMaster = new TalonFX(30);
-        mStarMaster.setInverted(true);
+        mStarMaster.setInverted(false);
         mStarSlave1 = new TalonFX(31);
         mStarSlave1.follow(mStarMaster);
         mStarSlave1.setInverted(true);
+        mStarSlave1.setInverted(false);
         //mStarSlave2 = new TalonFX(15);
         //mStarSlave2.follow(mStarMaster);
         //mStarSlave2.setInverted(true);
@@ -38,7 +41,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
        //mPortMaster.set(TalonFXControlMode.PercentOutput, .15);
        // mStarMaster.set(TalonFXControlMode.PercentOutput, .15);
-        update(mDriveJoystick.getX(), mDriveJoystick.getY());
+        update(mDriveJoystick.getY(), mDriveJoystick.getX());
     }
 
 
@@ -66,9 +69,9 @@ public class Robot extends TimedRobot {
         }else{
             if(rotate >= 0.0){
                 portOutput = maxInput;
-                starOutput = throttle + rotate;
+                starOutput = throttle - rotate;
             }else{
-                portOutput = throttle - rotate;
+                portOutput = throttle + rotate;
                 starOutput = maxInput;
             }
         }
