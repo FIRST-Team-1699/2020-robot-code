@@ -36,6 +36,17 @@ public class ColorMatcher {
     /** original setting */
     private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113); 
 
+    public enum color{
+        unknown,
+        yellow,
+        green,
+        blue,
+        red
+
+    }
+
+    private color mcurrentColor;
+
     //private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.600, 0.113); // no red/green boundary sees yellow
     //private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.400, 0.113);  // no red/green boundary sees yellow 
 
@@ -53,9 +64,10 @@ public class ColorMatcher {
         m_colorMatcher.addColorMatch(kYellowTarget);
 
         m_colorMatcher.setConfidenceThreshold(0.80);
+        mcurrentColor = color.unknown;
     }
 
-    public void update() {
+    public color update() {
         /**
          * The method GetColor() returns a normalized color value from the sensor and
          * can be Useful if outputting the color to use an RGB LED or similar. To read
@@ -75,14 +87,19 @@ public class ColorMatcher {
 
          if (match.color == kBlueTarget) {
              colorString = "Blue";
+             mcurrentColor = color.blue;
          } else if (match.color == kRedTarget) {
              colorString = "Red";
+             mcurrentColor = color.red;
          } else if (match.color == kGreenTarget) {
              colorString = "Green";
+             mcurrentColor = color.green;
          } else if (match.color == kYellowTarget) {
              colorString = "Yellow";
+             mcurrentColor = color.yellow;
          } else {
              colorString = "Unknown";
+             mcurrentColor = color.unknown;
          }
         /**
          * Open Smart Dashboard or Shuffleboard to see the color detected by the Sensor.
@@ -92,5 +109,6 @@ public class ColorMatcher {
         SmartDashboard.putNumber("Blue", detectedColor.blue);
         SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", colorString);
+        return mcurrentColor;
     }
 }
