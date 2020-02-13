@@ -30,13 +30,13 @@ public class ColorMatcher {
      * Note: Any example colors should be calibrated as the user needs, these are
      * here as a basic example.
      */
-    private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-    private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-    private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+    private final edu.wpi.first.wpilibj.util.Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+    private final edu.wpi.first.wpilibj.util.Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+    private final edu.wpi.first.wpilibj.util.Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
     /** original setting */
-    private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113); 
+    private final edu.wpi.first.wpilibj.util.Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113); 
 
-    public enum color{
+    public enum Color{
         unknown,
         yellow,
         green,
@@ -45,7 +45,7 @@ public class ColorMatcher {
 
     }
 
-    private color mcurrentColor;
+    private Color mCurrentColor;
 
     //private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.600, 0.113); // no red/green boundary sees yellow
     //private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.400, 0.113);  // no red/green boundary sees yellow 
@@ -64,22 +64,22 @@ public class ColorMatcher {
         m_colorMatcher.addColorMatch(kYellowTarget);
 
         m_colorMatcher.setConfidenceThreshold(0.80);
-        mcurrentColor = color.unknown;
+        mCurrentColor = Color.unknown;
     }
 
-    public color update() {
-        /**
+    public Color update() {
+        /*
          * The method GetColor() returns a normalized color value from the sensor and
          * can be Useful if outputting the color to use an RGB LED or similar. To read
          * the raw color, or use GetRawColor().
-         * 
+         *
          * The color sensor works best when within a few inches from an object in well
          * lit conditions (the built in LED is a big help here!). The farther an object
          * is the more light from the surroundings will bleed into the measurements and
          * make it difficult to accurately determine its color.
          */
-        Color detectedColor = m_ColorSensor.getColor();
-        /**
+        edu.wpi.first.wpilibj.util.Color detectedColor = m_ColorSensor.getColor();
+        /*
          * Run the color match algorithm on our detected color
          */
         String colorString;
@@ -87,19 +87,19 @@ public class ColorMatcher {
 
          if (match.color == kBlueTarget) {
              colorString = "Blue";
-             mcurrentColor = color.blue;
+             mCurrentColor = Color.blue;
          } else if (match.color == kRedTarget) {
              colorString = "Red";
-             mcurrentColor = color.red;
+             mCurrentColor = Color.red;
          } else if (match.color == kGreenTarget) {
              colorString = "Green";
-             mcurrentColor = color.green;
+             mCurrentColor = Color.green;
          } else if (match.color == kYellowTarget) {
              colorString = "Yellow";
-             mcurrentColor = color.yellow;
+             mCurrentColor = Color.yellow;
          } else {
              colorString = "Unknown";
-             mcurrentColor = color.unknown;
+             mCurrentColor = Color.unknown;
          }
         /**
          * Open Smart Dashboard or Shuffleboard to see the color detected by the Sensor.
@@ -109,6 +109,6 @@ public class ColorMatcher {
         SmartDashboard.putNumber("Blue", detectedColor.blue);
         SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", colorString);
-        return mcurrentColor;
+        return mCurrentColor;
     }
 }
