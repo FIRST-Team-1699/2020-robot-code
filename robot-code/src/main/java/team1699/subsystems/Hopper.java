@@ -49,20 +49,20 @@ public class Hopper {
                 break;
             case MOVING_FORWARD:
                 //TODO Run motors when ball are in the correct position
-                if(intakeBreak.triggered()){ //TODO Rework the switch def changes to states
-                    //Move motors until ball break is triggered
-                    new Runnable(){ //TODO Figure out if this stops the method from competing
-                        @Override
-                        public void run() {
-                            //Need to build beam break to be more of a one time switch
-                            while(!ballBreak.triggered()){
-                                //Move forward
-                            }
-                            //TODO Turn off motor
-                            //This is prob not thread safe
-                        }
-                    };
-                }
+//                if(intakeBreak.triggered()){ //TODO Rework the switch def changes to states
+//                    //Move motors until ball break is triggered
+//                    new Runnable(){ //TODO Figure out if this stops the method from competing
+//                        @Override
+//                        public void run() {
+//                            //Need to build beam break to be more of a one time switch
+//                            while(!ballBreak.triggered()){
+//                                //Move forward
+//                            }
+//                            //TODO Turn off motor
+//                            //This is prob not thread safe
+//                        }
+//                    };
+//              }
                 break;
             case MOVING_BACKWARD:
                 //TODO Run motors backwards
