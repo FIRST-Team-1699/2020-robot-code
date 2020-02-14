@@ -8,12 +8,14 @@ public class Shooter {
     enum ShooterState{
         UNINITIALIZED,
         RUNNING,
-        ESTOPPED
+        SHOOT,
+        STOPPED
     }
 
     private final SpeedControllerGroup controllerGroup;
     private double goal = 0.0; //TODO Figure out units
-    private ShooterState state = ShooterState.UNINITIALIZED;
+    private ShooterState currentState = ShooterState.UNINITIALIZED;
+    private ShooterState wantedState;
     double lastError = 0.0;
     double filteredGoal = 0.0;
 
@@ -41,30 +43,32 @@ public class Shooter {
     }
 
     public void update(double encoderRate, final boolean enabled){
-        switch(state){
+        switch(currentState){
             case UNINITIALIZED:
                 if(enabled){
-                    state = ShooterState.RUNNING;
+                    currentState = ShooterState.RUNNING;
                     filteredGoal = encoderRate;
                 }
                 break;
             case RUNNING:
                 filteredGoal = goal;
                 break;
-            case ESTOPPED:
-                //TODO Figure out what to do here
+            case SHOOT:
+                break;
+            case STOPPED:
+                //TODO Set motor to zero voltage output or set goal to zero velocity
                 break;
             default:
-                state = ShooterState.UNINITIALIZED;
+                currentState = ShooterState.UNINITIALIZED;
                 break;
         }
 
         final double error = filteredGoal - encoderRate;
         final double vel = (error - lastError) / kDt;
         lastError = error;
-        double voltage = Kp * error + Kv * vel;
+        final double voltage = Kp * error + Kv * vel;
 
-        final double maxVoltage = state == ShooterState.RUNNING ? kMaxVoltage : kMaxZeroingVoltage;
+        final double maxVoltage = currentState == ShooterState.RUNNING ? kMaxVoltage : kMaxZeroingVoltage;
 
         if(voltage >= maxVoltage){
             controllerGroup.set(Math.min(voltage, maxVoltage));
@@ -79,6 +83,14 @@ public class Shooter {
 
     public double getGoal(){
         return goal;
+    }
+
+    public void setWantedState(final ShooterState wantedState){
+        this.wantedState = wantedState;
+    }
+
+    public ShooterState getCurrentState() {
+        return currentState;
     }
 
     /**
