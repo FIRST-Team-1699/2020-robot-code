@@ -4,7 +4,9 @@ import team1699.utils.Utils;
 import team1699.utils.controllers.SpeedControllerGroup;
 import team1699.utils.sensors.BetterEncoder;
 
-public class Shooter implements Subsystem{
+//TODO Fix
+//public class Shooter implements Subsystem{
+public class Shooter{
 
     enum ShooterState{
         UNINITIALIZED,
@@ -45,7 +47,7 @@ public class Shooter implements Subsystem{
         this.encoder = encoder;
     }
 
-    public void update(){
+    public void update(double encoderRate){
         switch(currentState){
             case UNINITIALIZED:
                 currentState = ShooterState.RUNNING;
