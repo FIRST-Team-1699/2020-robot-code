@@ -102,6 +102,6 @@ public class Shooter{
      */
     public boolean atGoal() {
         //TODO Check tolerance
-        return Utils.epsilonEquals(lastError, 0, 0.05);
+        return Utils.epsilonEquals(lastError, 0, 10.0);
     }
 }

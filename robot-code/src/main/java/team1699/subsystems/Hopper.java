@@ -81,6 +81,11 @@ public class Hopper implements Subsystem{
                 break;
             case SHOOTING:
                 //TODO Run motors to allow shooting
+                //TODO May need some sort of lock if the flipper changes beam state too often
+                //Run forward until ball breaks shooter beam break
+                //Wait until beam is restored
+                //Repeat
+
                 break;
             case MOVING_BACKWARD:
                 //TODO Run motors backwards
@@ -92,7 +97,7 @@ public class Hopper implements Subsystem{
     }
 
     private void handleStoppedTransition(){
-
+        
     }
 
     private void handleIntakingTransition(){
