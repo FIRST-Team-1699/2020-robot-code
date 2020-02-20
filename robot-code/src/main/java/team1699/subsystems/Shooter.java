@@ -51,7 +51,7 @@ public class Shooter{
         switch(currentState){
             case UNINITIALIZED:
                 currentState = ShooterState.RUNNING;
-                filteredGoal = encoder.getRate();
+                filteredGoal = encoderRate;
                 break;
             case RUNNING:
                 filteredGoal = goal;
@@ -66,7 +66,7 @@ public class Shooter{
                 break;
         }
 
-        final double error = filteredGoal - encoder.getRate();
+        final double error = filteredGoal - encoderRate;
         final double vel = (error - lastError) / kDt;
         lastError = error;
         final double voltage = Kp * error + Kv * vel;
