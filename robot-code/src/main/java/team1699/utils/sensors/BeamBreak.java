@@ -3,7 +3,7 @@ package team1699.utils.sensors;
 public abstract class BeamBreak {
 
     //TODO Check state names
-    enum BeamState{
+    public enum BeamState{
         BROKEN,
         CLOSED,
         ERROR

@@ -35,6 +35,7 @@ public class BallTransferStateMachine {
 
     private void handleIntakingStateTransition(){
         intake.setWantedState(Intake.IntakeStates.DEPLOYED);
+        hopper.setWantedState(Hopper.HopperState.INTAKING);
     }
 
     public BallTransferState getWantedState() {

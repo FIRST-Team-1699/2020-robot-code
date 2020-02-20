@@ -1,12 +1,17 @@
 package team1699.subsystems;
 
+import team1699.utils.controllers.BetterSpeedController;
 import team1699.utils.sensors.BeamBreak;
 
 public class Hopper {
 
+    public static final double FORWARD_SPEED = 1.0;
+    public static final double REVERSE_SPEED = FORWARD_SPEED;
+
     //TODO Need to rework states so only moves forward when allowed
     enum HopperState{
-        MOVING_FORWARD,
+        INTAKING,
+        SHOOTING,
         MOVING_BACKWARD,
         STOPPED
     }
@@ -14,15 +19,19 @@ public class Hopper {
     //TODO Need to figure out if the flipper is part of this subsystem or another one
 
     private HopperState currentState;
-    private HopperState wantedState;
-    private final BeamBreak intakeBreak, ballBreak;
+    private HopperState wantedState = HopperState.STOPPED;
+    private final BeamBreak intakeBreak, ballBreak, shooterBreak;
+    private final BetterSpeedController carrierMotor;
     private int mBallsStored;
+    private boolean lock = false; //Used to make sure that we ignore the correct time the beam is closed
 
     //TODO Add motors
-    public Hopper(final BeamBreak intakeBreak, final BeamBreak ballBreak){
+    public Hopper(final BeamBreak intakeBreak, final BeamBreak ballBreak, final BeamBreak shooterBreak, final BetterSpeedController carrierMotor){
         wantedState = HopperState.STOPPED;
         this.intakeBreak = intakeBreak;
         this.ballBreak = ballBreak;
+        this.shooterBreak = shooterBreak;
+        this.carrierMotor = carrierMotor;
     }
 
     public void update(){
@@ -33,12 +42,15 @@ public class Hopper {
 
         if(wantedState == HopperState.STOPPED){
             handleStoppedTransition();
-        }else if(wantedState == HopperState.MOVING_FORWARD){
-            handleMovingForwardTransition();
+        }else if(wantedState == HopperState.INTAKING){
+            handleIntakingTransition();
+        } else if(wantedState == HopperState.SHOOTING){
+            handleShootingTransition();
         } else if (wantedState == HopperState.MOVING_BACKWARD) {
             handleMovingBackwardTransition();
         }
 
+        currentState = wantedState;
         runSubsystem();
     }
 
@@ -47,22 +59,28 @@ public class Hopper {
             case STOPPED:
                 //TODO Set all motors to speed zero
                 break;
-            case MOVING_FORWARD:
+            case INTAKING:
                 //TODO Run motors when ball are in the correct position
-//                if(intakeBreak.triggered()){ //TODO Rework the switch def changes to states
-//                    //Move motors until ball break is triggered
-//                    new Runnable(){ //TODO Figure out if this stops the method from competing
-//                        @Override
-//                        public void run() {
-//                            //Need to build beam break to be more of a one time switch
-//                            while(!ballBreak.triggered()){
-//                                //Move forward
-//                            }
-//                            //TODO Turn off motor
-//                            //This is prob not thread safe
-//                        }
-//                    };
-//              }
+
+                //If the beam is broken, set the motor to forward.
+                if(intakeBreak.triggered() == BeamBreak.BeamState.BROKEN){
+                    carrierMotor.set(FORWARD_SPEED);
+                    lock = true;
+                }
+
+                //Ignore first time ballBreak is broken
+                if(ballBreak.triggered() == BeamBreak.BeamState.BROKEN && lock){
+                    lock = false;
+                }
+
+                //If the beam is closed, set the motor to stop.
+                if(ballBreak.triggered() == BeamBreak.BeamState.CLOSED && !lock){
+                    carrierMotor.set(0.0);
+                }
+
+                break;
+            case SHOOTING:
+                //TODO Run motors to allow shooting
                 break;
             case MOVING_BACKWARD:
                 //TODO Run motors backwards
@@ -77,7 +95,11 @@ public class Hopper {
 
     }
 
-    private void handleMovingForwardTransition(){
+    private void handleIntakingTransition(){
+
+    }
+
+    private void handleShootingTransition() {
 
     }
 
