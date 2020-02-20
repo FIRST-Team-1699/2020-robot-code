@@ -2,8 +2,9 @@ package team1699.subsystems;
 
 import team1699.utils.Utils;
 import team1699.utils.controllers.SpeedControllerGroup;
+import team1699.utils.sensors.BetterEncoder;
 
-public class Shooter {
+public class Shooter implements Subsystem{
 
     enum ShooterState{
         UNINITIALIZED,
@@ -13,6 +14,7 @@ public class Shooter {
     }
 
     private final SpeedControllerGroup controllerGroup;
+    private final BetterEncoder encoder;
     private double goal = 0.0; //TODO Figure out units
     private ShooterState currentState = ShooterState.UNINITIALIZED;
     private ShooterState wantedState;
@@ -38,17 +40,16 @@ public class Shooter {
     static final double Kv = 0.01;
 
     //TODO Add a constructor so we don't have to use a group?
-    public Shooter(SpeedControllerGroup controllerGroup){
+    public Shooter(final SpeedControllerGroup controllerGroup, final BetterEncoder encoder){
         this.controllerGroup = controllerGroup;
+        this.encoder = encoder;
     }
 
-    public void update(double encoderRate, final boolean enabled){
+    public void update(){
         switch(currentState){
             case UNINITIALIZED:
-                if(enabled){
-                    currentState = ShooterState.RUNNING;
-                    filteredGoal = encoderRate;
-                }
+                currentState = ShooterState.RUNNING;
+                filteredGoal = encoder.getRate();
                 break;
             case RUNNING:
                 filteredGoal = goal;
@@ -63,7 +64,7 @@ public class Shooter {
                 break;
         }
 
-        final double error = filteredGoal - encoderRate;
+        final double error = filteredGoal - encoder.getRate();
         final double vel = (error - lastError) / kDt;
         lastError = error;
         final double voltage = Kp * error + Kv * vel;

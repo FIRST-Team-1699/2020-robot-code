@@ -1,6 +1,6 @@
 package team1699.subsystems;
 
-public class Intake {
+public class Intake implements Subsystem{
 
     enum IntakeStates{
         DEPLOYED,

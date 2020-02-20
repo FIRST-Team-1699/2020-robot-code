@@ -3,7 +3,7 @@ package team1699.subsystems;
 import team1699.utils.controllers.BetterSpeedController;
 import team1699.utils.sensors.BeamBreak;
 
-public class Hopper {
+public class Hopper implements Subsystem{
 
     public static final double FORWARD_SPEED = 1.0;
     public static final double REVERSE_SPEED = FORWARD_SPEED;
@@ -60,7 +60,7 @@ public class Hopper {
                 //TODO Set all motors to speed zero
                 break;
             case INTAKING:
-                //TODO Run motors when ball are in the correct position
+                //TODO Keep track of balls stored in system
 
                 //If the beam is broken, set the motor to forward.
                 if(intakeBreak.triggered() == BeamBreak.BeamState.BROKEN){
