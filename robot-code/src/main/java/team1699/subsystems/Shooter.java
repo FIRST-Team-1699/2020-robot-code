@@ -8,6 +8,11 @@ import team1699.utils.sensors.BetterEncoder;
 //public class Shooter implements Subsystem{
 public class Shooter{
 
+    enum ShooterPosition{
+        UP,
+        DOWN
+    }
+
     enum ShooterState{
         UNINITIALIZED,
         RUNNING,
@@ -18,8 +23,8 @@ public class Shooter{
     private final SpeedControllerGroup controllerGroup;
     private final BetterEncoder encoder;
     private double goal = 0.0; //TODO Figure out units
-    private ShooterState currentState = ShooterState.UNINITIALIZED;
-    private ShooterState wantedState;
+    private ShooterState currentState = ShooterState.UNINITIALIZED, wantedState;
+    private ShooterPosition wantedPosition, currentPosition;
     double lastError = 0.0;
     double filteredGoal = 0.0;
 

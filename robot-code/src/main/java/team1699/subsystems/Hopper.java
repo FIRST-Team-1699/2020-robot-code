@@ -6,9 +6,10 @@ import team1699.utils.sensors.BeamBreak;
 public class Hopper implements Subsystem{
 
     public static final double FORWARD_SPEED = 1.0;
-    public static final double REVERSE_SPEED = FORWARD_SPEED;
+    public static final double REVERSE_SPEED = -FORWARD_SPEED;
+    public static final byte MAX_BALLS = 4;
 
-    //TODO Need to rework states so only moves forward when allowed
+    //TODO Change to use runState instead of runSubsystem
     enum HopperState{
         INTAKING,
         SHOOTING,
@@ -18,11 +19,10 @@ public class Hopper implements Subsystem{
 
     //TODO Need to figure out if the flipper is part of this subsystem or another one
 
-    private HopperState currentState;
-    private HopperState wantedState = HopperState.STOPPED;
+    private HopperState currentState, wantedState;
     private final BeamBreak intakeBreak, ballBreak, shooterBreak;
     private final BetterSpeedController carrierMotor;
-    private int mBallsStored;
+    private byte mBallsStored;
     private boolean lock = false; //Used to make sure that we ignore the correct time the beam is closed
 
     //TODO Add motors
@@ -57,7 +57,7 @@ public class Hopper implements Subsystem{
     private void runSubsystem(){
         switch(currentState){
             case STOPPED:
-                //TODO Set all motors to speed zero
+                carrierMotor.set(0.0);
                 break;
             case INTAKING:
                 //TODO Keep track of balls stored in system
@@ -80,18 +80,20 @@ public class Hopper implements Subsystem{
 
                 break;
             case SHOOTING:
-                //TODO Run motors to allow shooting
+                //TODO Change ball count and stop when ball could it zero
                 //TODO May need some sort of lock if the flipper changes beam state too often
                 //Run forward until ball breaks shooter beam break
                 //Wait until beam is restored
                 //Repeat
+                if(shooterBreak.triggered() == BeamBreak.BeamState.CLOSED){
+                    carrierMotor.set(FORWARD_SPEED);
+                }else if(shooterBreak.triggered() == BeamBreak.BeamState.BROKEN){
+                    carrierMotor.set(0.0);
+                }
 
                 break;
             case MOVING_BACKWARD:
-                //TODO Run motors backwards
-                break;
-            default:
-                //TODO Handle invalid system state
+                carrierMotor.set(REVERSE_SPEED);
                 break;
         }
     }
@@ -112,19 +114,15 @@ public class Hopper implements Subsystem{
 
     }
 
-    /**
-     * Removed a ball from the system. For example if a ball is fired, this should be called
-     */
-    public void removeBall(){
-        //TODO Rework subsystems to remove the need for this
-        mBallsStored--;
-    }
-
     public void setWantedState(final HopperState wantedState) {
         this.wantedState = wantedState;
     }
 
     public HopperState getCurrentState() {
         return currentState;
+    }
+
+    public boolean isFull(){
+        return mBallsStored == MAX_BALLS;
     }
 }

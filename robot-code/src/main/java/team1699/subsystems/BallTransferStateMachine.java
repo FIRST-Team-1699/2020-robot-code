@@ -25,17 +25,52 @@ public class BallTransferStateMachine {
 
     public void update(){
         if(currentState == wantedState){
+            runSubsystem();
             return;
         }
 
         if(wantedState == BallTransferState.INTAKING){
             handleIntakingStateTransition();
+        }else if(wantedState == BallTransferState.SHOOTING){
+            handleShootingStateTransition();
+        }else if(wantedState == BallTransferState.EMPTYING){
+            handleEmptyingStateTransition();
+        }else if(wantedState == BallTransferState.WAITING){
+            handleWaitingStateTransition();
+        }
+
+        currentState = wantedState;
+        runSubsystem();
+    }
+
+    private void runSubsystem(){
+        switch (currentState){
+            case INTAKING:
+                break;
+            case SHOOTING:
+                break;
+            case EMPTYING:
+                break;
+            case WAITING:
+                break;
         }
     }
 
     private void handleIntakingStateTransition(){
         intake.setWantedState(Intake.IntakeStates.DEPLOYED);
         hopper.setWantedState(Hopper.HopperState.INTAKING);
+    }
+
+    private void handleShootingStateTransition() {
+
+    }
+
+    private void handleEmptyingStateTransition() {
+
+    }
+
+    private void handleWaitingStateTransition() {
+
     }
 
     public BallTransferState getWantedState() {
