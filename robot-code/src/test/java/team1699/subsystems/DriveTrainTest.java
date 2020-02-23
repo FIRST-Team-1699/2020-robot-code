@@ -17,7 +17,7 @@ public class DriveTrainTest{
 		BetterSpeedController starTest = new TestSpeedController(1);
 		SpeedControllerGroup portGroup = new SpeedControllerGroup(portTest);
 		SpeedControllerGroup starGroup = new SpeedControllerGroup(starTest);
-		DriveTrain driveTrain = new DriveTrain(portGroup, starGroup, new Joystick(0));
+		DriveTrain driveTrain = new DriveTrain(portGroup, starGroup, null);
 		driveTrain.runArcadeDrive(1.0, 0);
 		assertEquals(1.0, portTest.get(), 0.1);
 		assertEquals(1.0, starTest.get(), 0.1);
