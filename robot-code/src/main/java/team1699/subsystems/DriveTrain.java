@@ -20,7 +20,7 @@ public class DriveTrain implements Subsystem{
 	}
 
 	//WPILib Differential Drive
-	private void runArcadeDrive(double throttle, double rotate){
+	protected void runArcadeDrive(double throttle, double rotate){
 		double portOutput = 0.0;
 		double starOutput = 0.0;
 
