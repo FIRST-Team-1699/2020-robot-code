@@ -26,7 +26,7 @@ public class ShooterTest {
     @Test
     public void testShooterModel(){
         SpeedControllerGroup testGroup = new SpeedControllerGroup(new TestSpeedController(1));
-        Shooter shooter = new Shooter(testGroup); //TODO Add speed controller group
+        Shooter shooter = new Shooter(testGroup, null); //TODO Add speed controller group
         shooter.setGoal(goal);
 
         PrintWriter pw = null;
@@ -40,7 +40,7 @@ public class ShooterTest {
         double currentTime = 0.0;
         while(currentTime < 30.0) {
             //TODO Change to get voltage for simController
-            shooter.update(simShooter.getVelocity(), true);
+            shooter.update(simShooter.getVelocity());
             final double voltage = testGroup.get();
             pw.write(String.format("%f, %f, %f, %f, %f, %f\n", currentTime, simShooter.velocity, voltage, simShooter.getAcceleration(voltage), shooter.filteredGoal, shooter.lastError));
             simulateTime(voltage, ShooterSim.kDt);
