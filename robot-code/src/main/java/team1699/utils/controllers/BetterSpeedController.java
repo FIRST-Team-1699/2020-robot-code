@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 
 public abstract class BetterSpeedController{
 
-	//TODO Populate
 	public BetterSpeedController(){
 
 	}

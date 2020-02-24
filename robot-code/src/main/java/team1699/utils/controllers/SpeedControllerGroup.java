@@ -24,7 +24,6 @@ public class SpeedControllerGroup{
 		this.controllers.addAll(Arrays.asList(controllers));
 	}
 
-	//TODO Need to convert to use voltage instead of percent
 	public void set(final double percent){
 		this.master.set(percent);
 		for(BetterSpeedController controller : controllers){
@@ -45,7 +44,5 @@ public class SpeedControllerGroup{
 	public BetterSpeedController getMaster(){
 		return master;
 	}
-
-	//TODO Figure out how to generalize talon motion control
 
 }
