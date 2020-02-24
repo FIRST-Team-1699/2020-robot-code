@@ -1,5 +1,9 @@
 package team1699.utils.controllers;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.BaseTalon;
+import team1699.utils.controllers.falcon.BetterFalcon;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -28,8 +32,18 @@ public class SpeedControllerGroup{
 		}
 	}
 
+	//Should only be used when it is known the controller is a talon
+	public void set(final ControlMode mode, final double out){
+		//TODO Try catch cast
+		master.getTalon().set(mode, out);
+	}
+
 	public double get(){
 		return this.master.get();
+	}
+
+	public BetterSpeedController getMaster(){
+		return master;
 	}
 
 	//TODO Figure out how to generalize talon motion control
