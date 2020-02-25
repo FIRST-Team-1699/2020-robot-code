@@ -26,7 +26,7 @@ public class ShooterTest {
     @Test
     public void testShooterModel(){
         SpeedControllerGroup testGroup = new SpeedControllerGroup(new TestSpeedController(1));
-        Shooter shooter = new Shooter(testGroup, null); //TODO Add speed controller group
+        Shooter shooter = new Shooter(testGroup, null, null); //TODO Add speed controller group
         shooter.setGoal(goal);
 
         PrintWriter pw = null;
