@@ -67,6 +67,7 @@ public class Shooter{
                 filteredGoal = goal;
                 break;
             case SHOOT:
+                //TODO Check that we have the correct velocity
                 filteredGoal = goal;
                 if(beamBreak.triggered() == BeamBreak.BeamState.BROKEN){
                     //Deploy flipper

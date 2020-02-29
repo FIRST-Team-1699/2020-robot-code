@@ -19,11 +19,11 @@ public class LimeLight {
         table = NetworkTableInstance.getDefault();
     }
 
-    public int getTX(){
-        return table.getEntry("tx").getNumber(0).intValue();
+    public double getTX(){
+        return table.getEntry("tx").getDouble(0);
     }
 
-    public int getTY(){
-        return table.getEntry("ty").getNumber(0).intValue();
+    public double getTY(){
+        return table.getEntry("ty").getDouble(0);
     }
 }

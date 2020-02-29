@@ -34,6 +34,7 @@ public class ShooterTest {
             pw = new PrintWriter(new File("dump.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return; //Return if something breaks
         }
         pw.write("# time, velocity, voltage, acceleration, goal, lastError\n");
 
