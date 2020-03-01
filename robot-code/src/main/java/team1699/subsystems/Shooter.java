@@ -51,6 +51,7 @@ public class Shooter{
     static final double Kv = 0.01;
 
     //TODO Add a constructor so we don't have to use a group?
+    //TODO Might need to switch to two motors instead of one
     public Shooter(final SpeedControllerGroup controllerGroup, final BetterEncoder encoder, final BeamBreak beamBreak){
         this.controllerGroup = controllerGroup;
         this.encoder = encoder;
@@ -67,9 +68,8 @@ public class Shooter{
                 filteredGoal = goal;
                 break;
             case SHOOT:
-                //TODO Check that we have the correct velocity
                 filteredGoal = goal;
-                if(beamBreak.triggered() == BeamBreak.BeamState.BROKEN){
+                if(beamBreak.triggered() == BeamBreak.BeamState.BROKEN && atGoal()){
                     //Deploy flipper
                     flipperDeployed = true;
                 }else if(flipperDeployed && flipperDeployedTicks < 100){
@@ -80,8 +80,9 @@ public class Shooter{
                 }
                 break;
             case STOPPED:
-                //TODO Set motor to zero voltage output or set goal to zero velocity
-                break;
+                filteredGoal = 0.0;
+                controllerGroup.set(0.0);
+                return;
             default:
                 currentState = ShooterState.UNINITIALIZED;
                 break;

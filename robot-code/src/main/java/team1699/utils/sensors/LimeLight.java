@@ -20,10 +20,22 @@ public class LimeLight {
     }
 
     public double getTX(){
-        return table.getEntry("tx").getDouble(0);
+        return table.getTable("limelight").getEntry("tx").getDouble(0);
     }
 
     public double getTY(){
-        return table.getEntry("ty").getDouble(0);
+        return table.getTable("limelight").getEntry("ty").getDouble(0);
+    }
+
+    public void turnOff(){
+        table.getTable("limelight").getEntry("ledMode").setNumber(1);
+    }
+
+    public void turnOn(){
+        table.getTable("limelight").getEntry("ledMode").setNumber(3);
+    }
+
+    public void blink(){
+        table.getTable("limelight").getEntry("ledMode").setNumber(2);
     }
 }
