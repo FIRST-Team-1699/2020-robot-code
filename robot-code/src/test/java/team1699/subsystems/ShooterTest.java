@@ -40,7 +40,6 @@ public class ShooterTest {
 
         double currentTime = 0.0;
         while(currentTime < 30.0) {
-            //TODO Change to get voltage for simController
             shooter.update(simShooter.getVelocity());
             final double voltage = testGroup.get();
             pw.write(String.format("%f, %f, %f, %f, %f, %f\n", currentTime, simShooter.velocity, voltage, simShooter.getAcceleration(voltage), shooter.filteredGoal, shooter.lastError));
@@ -92,7 +91,6 @@ public class ShooterTest {
 
         private double velocity = 0.0;
 
-        //TODO Think gearing forgotten
         private double getAcceleration(final double voltage){
 //            System.out.println(String.format("Velocity: %f, Voltage: %f", velocity, voltage));
 //            System.out.println("Accel: " + (voltage - ((velocity * kG)/(MotorConstants.MotorCIM.Kv))) * (MotorConstants.MotorCIM.Kt/(kI * MotorConstants.MotorCIM.kResistance)));

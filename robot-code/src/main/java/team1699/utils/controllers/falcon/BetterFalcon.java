@@ -1,6 +1,7 @@
 package team1699.utils.controllers.falcon;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import team1699.utils.controllers.BetterSpeedController;
 
@@ -36,6 +37,9 @@ public class BetterFalcon extends BetterSpeedController {
         talonFX.setInverted(inverted);
     }
 
+    public void set(final ControlMode controlMode, final double out){
+        talonFX.set(controlMode, out);
+    }
 
     @Override
     public void set(double percent) {
@@ -47,5 +51,21 @@ public class BetterFalcon extends BetterSpeedController {
         return talonFX.getMotorOutputPercent();
     }
 
-    //TODO Add way to get sensors
+    public double getEncoder(){
+        return talonFX.getSensorCollection().getIntegratedSensorPosition(); //TODO check correct or if should be absolute
+    }
+
+    public double getEncoderRate(){
+        return talonFX.getSensorCollection().getIntegratedSensorVelocity();
+    }
+
+    public void resetEncoders() {
+        //TODO Implement
+    }
+
+    @Override
+    public BaseTalon getTalon() {
+        return talonFX;
+    }
+
 }

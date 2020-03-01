@@ -20,7 +20,6 @@ public class MotorConstants {
         public static final double Kt = kStallTorque / kStallCurrent;
     }
 
-    //TODO Calculate values
     public class MotorDual775Pro{
         //Stall Torque in N*m
         public static final double kStallTorque = 0.71 * 2.00;
@@ -55,7 +54,6 @@ public class MotorConstants {
         public static final double Kt = kStallTorque / kStallCurrent;
     }
 
-    //TODO Check values
     public static class MotorDualCIM{
         //Stall Torque in N*m
         public static final double kStallTorque = 2.41 * 2.00;
@@ -90,7 +88,6 @@ public class MotorConstants {
         public static final double Kt = kStallTorque / kStallCurrent;
     }
 
-    //TODO Check values
     public static class MotorDualFalcon{
         //Stall Torque in N*m
         public static final double kStallTorque = 4.69 * 2.00;
