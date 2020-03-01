@@ -16,7 +16,7 @@ public class BallTransferTest {
     Hopper hopper;
 
     @Before
-    public void setupTest(){
+    public void setupTest() {
         testController = new TestSpeedController(0);
         testBallBreak = new SimBeamBreak(0);
         testShooterBreak = new SimBeamBreak(1);
@@ -25,7 +25,7 @@ public class BallTransferTest {
     }
 
     @Test
-    public void testCorrectHopperMovement(){
+    public void testCorrectHopperMovement() {
         hopper.setWantedState(Hopper.HopperState.INTAKING);
         hopper.update();
         assertEquals(0.0, testController.get(), 0.0);

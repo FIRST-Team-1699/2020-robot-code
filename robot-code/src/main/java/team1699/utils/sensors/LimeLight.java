@@ -5,37 +5,36 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class LimeLight {
 
     private static LimeLight instance;
+    private final NetworkTableInstance table;
 
-    public static LimeLight getInstance(){
-        if(instance == null){
+    private LimeLight() {
+        table = NetworkTableInstance.getDefault();
+    }
+
+    public static LimeLight getInstance() {
+        if (instance == null) {
             instance = new LimeLight();
         }
         return instance;
     }
 
-    private final NetworkTableInstance table;
-
-    private LimeLight(){
-        table = NetworkTableInstance.getDefault();
-    }
-
-    public double getTX(){
+    public double getTX() {
         return table.getTable("limelight").getEntry("tx").getDouble(0);
     }
 
-    public double getTY(){
+    public double getTY() {
         return table.getTable("limelight").getEntry("ty").getDouble(0);
     }
 
-    public void turnOff(){
+    public void turnOff() {
         table.getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 
-    public void turnOn(){
+    public void turnOn() {
         table.getTable("limelight").getEntry("ledMode").setNumber(3);
     }
 
-    public void blink(){
+    public void blink() {
         table.getTable("limelight").getEntry("ledMode").setNumber(2);
     }
 }

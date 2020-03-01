@@ -41,8 +41,8 @@ deploy {
 def includeDesktopSupport = true
 
 // Maven central needed for JUnit	
-repositories {	
-    mavenCentral()	
+repositories {
+    mavenCentral()
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.

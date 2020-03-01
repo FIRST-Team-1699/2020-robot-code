@@ -8,36 +8,36 @@ import team1699.utils.controllers.BetterSpeedController;
 public class BetterFalcon extends BetterSpeedController {
 
     private final int port;
-    private ControlMode controlMode;
     private final TalonFX talonFX;
+    private ControlMode controlMode;
 
-    public BetterFalcon(final int port){
+    public BetterFalcon(final int port) {
         this.port = port;
         this.controlMode = ControlMode.PercentOutput;
         talonFX = new TalonFX(port);
     }
 
-    public BetterFalcon(final int port, final ControlMode controlMode){
+    public BetterFalcon(final int port, final ControlMode controlMode) {
         this.port = port;
         this.controlMode = controlMode;
         talonFX = new TalonFX(port);
     }
 
-    public BetterFalcon(final int port, final boolean inverted){
+    public BetterFalcon(final int port, final boolean inverted) {
         this.port = port;
         this.controlMode = ControlMode.PercentOutput;
         talonFX = new TalonFX(port);
         talonFX.setInverted(inverted);
     }
 
-    public BetterFalcon(final int port, final ControlMode controlMode, final boolean inverted){
+    public BetterFalcon(final int port, final ControlMode controlMode, final boolean inverted) {
         this.port = port;
         this.controlMode = controlMode;
         talonFX = new TalonFX(port);
         talonFX.setInverted(inverted);
     }
 
-    public void set(final ControlMode controlMode, final double out){
+    public void set(final ControlMode controlMode, final double out) {
         talonFX.set(controlMode, out);
     }
 
@@ -51,11 +51,11 @@ public class BetterFalcon extends BetterSpeedController {
         return talonFX.getMotorOutputPercent();
     }
 
-    public double getEncoder(){
+    public double getEncoder() {
         return talonFX.getSensorCollection().getIntegratedSensorPosition(); //TODO check correct or if should be absolute
     }
 
-    public double getEncoderRate(){
+    public double getEncoderRate() {
         return talonFX.getSensorCollection().getIntegratedSensorVelocity();
     }
 

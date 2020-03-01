@@ -1,7 +1,9 @@
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import team1699.subsystems.DriveTrain;
@@ -50,10 +52,10 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         String trajectoryJSONPath = "home/lvuser/deploy/paths/driveToShoot.wpilib.json";
-        try{
+        try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONPath);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-        }catch (IOException e){
+        } catch (IOException e) {
             DriverStation.reportError("Unable to open trajectory: " + trajectoryJSONPath, e.getStackTrace());
         }
     }
