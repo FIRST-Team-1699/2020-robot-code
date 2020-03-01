@@ -24,12 +24,15 @@ public class SpeedControllerGroup{
 		this.controllers.addAll(Arrays.asList(controllers));
 	}
 
-	public void set(final double percent){
-		this.master.set(percent);
-		for(BetterSpeedController controller : controllers){
-			controller.set(percent);
-		}
-	}
+	 public void set(final double percent) {
+        this.master.set(percent);
+        for (BetterSpeedController controller : controllers) {
+            if (controller != null) {
+
+                controller.set(percent);
+            }
+        }
+    }
 
 	//Should only be used when it is known the controller is a talon
 	public void set(final ControlMode mode, final double out){

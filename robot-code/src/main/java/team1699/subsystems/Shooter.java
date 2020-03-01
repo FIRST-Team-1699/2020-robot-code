@@ -2,6 +2,7 @@ package team1699.subsystems;
 
 import team1699.utils.Utils;
 import team1699.utils.controllers.SpeedControllerGroup;
+import team1699.utils.sensors.BeamBreak;
 import team1699.utils.sensors.BetterEncoder;
 
 //TODO Fix
@@ -22,11 +23,14 @@ public class Shooter{
 
     private final SpeedControllerGroup controllerGroup;
     private final BetterEncoder encoder;
+    private final BeamBreak beamBreak;
     private double goal = 0.0; //TODO Figure out units
     private ShooterState currentState = ShooterState.UNINITIALIZED, wantedState;
     private ShooterPosition wantedPosition, currentPosition;
     double lastError = 0.0;
     double filteredGoal = 0.0;
+    private boolean flipperDeployed = false;
+    private int flipperDeployedTicks = 0;
 
     static final double kDt = 0.05;
 
@@ -47,9 +51,11 @@ public class Shooter{
     static final double Kv = 0.01;
 
     //TODO Add a constructor so we don't have to use a group?
-    public Shooter(final SpeedControllerGroup controllerGroup, final BetterEncoder encoder){
+    //TODO Might need to switch to two motors instead of one
+    public Shooter(final SpeedControllerGroup controllerGroup, final BetterEncoder encoder, final BeamBreak beamBreak){
         this.controllerGroup = controllerGroup;
         this.encoder = encoder;
+        this.beamBreak = beamBreak;
     }
 
     public void update(double encoderRate){
@@ -62,10 +68,21 @@ public class Shooter{
                 filteredGoal = goal;
                 break;
             case SHOOT:
+                filteredGoal = goal;
+                if(beamBreak.triggered() == BeamBreak.BeamState.BROKEN && atGoal()){
+                    //Deploy flipper
+                    flipperDeployed = true;
+                }else if(flipperDeployed && flipperDeployedTicks < 100){
+                    flipperDeployedTicks++;
+                }else{
+                    //Retract flipper TODO Make sure the flipper is up for enough time
+                    flipperDeployed = false;
+                }
                 break;
             case STOPPED:
-                //TODO Set motor to zero voltage output or set goal to zero velocity
-                break;
+                filteredGoal = 0.0;
+                controllerGroup.set(0.0);
+                return;
             default:
                 currentState = ShooterState.UNINITIALIZED;
                 break;
