@@ -10,18 +10,18 @@ public class AdaFruitBeamBreak extends BeamBreak {
     public AdaFruitBeamBreak(int port) {
         super(port);
         beamBreak = new DigitalInput(port);
-        if(!beamBreak.get()){
+        if (!beamBreak.get()) {
             beamState = BeamState.ERROR;
-        }else{
+        } else {
             beamState = BeamState.CLOSED;
         }
     }
 
     @Override
     public BeamState triggered() {
-        if(beamBreak.get()){
+        if (beamBreak.get()) {
             beamState = BeamState.BROKEN;
-        }else{
+        } else {
             beamState = BeamState.CLOSED;
         }
         return beamState;
