@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team1699.utils.controllers.SpeedControllerGroup;
 import team1699.utils.controllers.falcon.BetterFalcon;
+import team1699.utils.sensors.LimeLight;
 
 public class DriveTrain extends SubsystemBase implements Subsystem{
 
@@ -40,7 +41,7 @@ public class DriveTrain extends SubsystemBase implements Subsystem{
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
 
-  private DriveState systemState, wantedState;fjoy
+  private DriveState systemState, wantedState;
     private final SpeedControllerGroup portDrive, starDrive;
 
     private final AHRS gyro;
@@ -160,7 +161,7 @@ public class DriveTrain extends SubsystemBase implements Subsystem{
 				}
 				portCommand += steeringAdjust;
 				starCommand -= steeringAdjust;
-
+				tankDriveVolts(portCommand, starCommand);
 				break;
 			default:
 				break;
