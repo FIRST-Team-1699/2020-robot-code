@@ -7,7 +7,7 @@ public class BallTransferStateMachine {
     private final Hopper hopper;
     private BallTransferState wantedState;
     private BallTransferState currentState;
-    //TODO Figure out if we need all of the subsystems to be passed in or if there is a better way
+
     public BallTransferStateMachine(final Shooter shooter, final Intake intake, final Hopper hopper) {
         this.shooter = shooter;
         this.intake = intake;
@@ -16,7 +16,6 @@ public class BallTransferStateMachine {
 
     public void update() {
         if (currentState == wantedState) {
-            runSubsystem();
             return;
         }
 
@@ -31,37 +30,30 @@ public class BallTransferStateMachine {
         }
 
         currentState = wantedState;
-        runSubsystem();
-    }
-
-    private void runSubsystem() {
-        switch (currentState) {
-            case INTAKING:
-                break;
-            case SHOOTING:
-                break;
-            case EMPTYING:
-                break;
-            case WAITING:
-                break;
-        }
     }
 
     private void handleIntakingStateTransition() {
         intake.setWantedState(Intake.IntakeStates.DEPLOYED);
         hopper.setWantedState(Hopper.HopperState.INTAKING);
+        shooter.setWantedState(Shooter.ShooterState.RUNNING);
     }
 
     private void handleShootingStateTransition() {
-
+        intake.setWantedState(Intake.IntakeStates.STORED);
+        hopper.setWantedState(Hopper.HopperState.SHOOTING);
+        shooter.setWantedState(Shooter.ShooterState.SHOOT);
     }
 
     private void handleEmptyingStateTransition() {
-
+        intake.setWantedState(Intake.IntakeStates.STORED);
+        hopper.setWantedState(Hopper.HopperState.MOVING_BACKWARD);
+        shooter.setWantedState(Shooter.ShooterState.RUNNING);
     }
 
     private void handleWaitingStateTransition() {
-
+        intake.setWantedState(Intake.IntakeStates.STORED);
+        hopper.setWantedState(Hopper.HopperState.STOPPED);
+        shooter.setWantedState(Shooter.ShooterState.RUNNING);
     }
 
     public BallTransferState getWantedState() {
@@ -76,6 +68,7 @@ public class BallTransferStateMachine {
         INTAKING, //Intaking Balls
         SHOOTING, //Shooting all balls in hopper
         EMPTYING, //Empty hopper without the shooter due to an error
-        WAITING   //Waiting for next state. Store intake, keep shooter at target velocity
+        WAITING,   //Waiting for next state. Store intake, keep shooter at target velocity
+        OFF //Turn off all subsystems
     }
 }

@@ -208,6 +208,7 @@ public class DriveTrain extends SubsystemBase implements Subsystem {
         return ramseteCommand.andThen(() -> tankDriveVolts(0, 0));
     }
 
+    //TODO Figure out if we need a state for motion profiling
     public enum DriveState {
         MANUAL,
         GOAL_TRACKING

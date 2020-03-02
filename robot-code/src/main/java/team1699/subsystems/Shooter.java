@@ -50,6 +50,7 @@ public class Shooter {
                 filteredGoal = goal;
                 break;
             case SHOOT:
+                //TODO Determine what flipper to use
                 filteredGoal = goal;
                 if (beamBreak.triggered() == BeamBreak.BeamState.BROKEN && atGoal()) {
                     //Deploy flipper
