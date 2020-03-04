@@ -15,18 +15,18 @@ import static org.junit.Assert.assertTrue;
 
 public class ShooterTest {
 
-    private ShooterSim simShooter;
     final static double goal = 2 * Math.PI; //TODO Figure out units (prob rad/sec)
+    private ShooterSim simShooter;
 
     @Before
-    public void setupTest(){
+    public void setupTest() {
         simShooter = new ShooterSim();
     }
 
     @Test
-    public void testShooterModel(){
+    public void testShooterModel() {
         SpeedControllerGroup testGroup = new SpeedControllerGroup(new TestSpeedController(1));
-        Shooter shooter = new Shooter(testGroup, null); //TODO Add speed controller group
+        Shooter shooter = new Shooter(testGroup, null, null); //TODO Add speed controller group
         shooter.setGoal(goal);
 
         PrintWriter pw = null;
@@ -34,12 +34,12 @@ public class ShooterTest {
             pw = new PrintWriter(new File("dump.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return; //Return if something breaks
         }
         pw.write("# time, velocity, voltage, acceleration, goal, lastError\n");
 
         double currentTime = 0.0;
-        while(currentTime < 30.0) {
-            //TODO Change to get voltage for simController
+        while (currentTime < 30.0) {
             shooter.update(simShooter.getVelocity());
             final double voltage = testGroup.get();
             pw.write(String.format("%f, %f, %f, %f, %f, %f\n", currentTime, simShooter.velocity, voltage, simShooter.getAcceleration(voltage), shooter.filteredGoal, shooter.lastError));
@@ -53,12 +53,12 @@ public class ShooterTest {
         assertEquals(goal, simShooter.velocity, 0.01);
     }
 
-    void simulateTime(final double voltage, final double time){
+    void simulateTime(final double voltage, final double time) {
         assertTrue(String.format("System asked for: %f volts which is greater than 12.0", voltage), voltage <= 12.0 && voltage >= -12.0);
         final double kSimTime = 0.0001;
 
         double currentTime = 0.0;
-        while(currentTime < time){
+        while (currentTime < time) {
             final double acceleration = simShooter.getAcceleration(voltage);
             //simShooter.velocity += simShooter.velocity * kSimTime;
             simShooter.velocity += acceleration * kSimTime;
@@ -73,32 +73,30 @@ public class ShooterTest {
         }
     }
 
-    private static class ShooterSim{
+    private static class ShooterSim {
 
+        //Sample time
+        public static final double kDt = 0.010;
         //TODO Change constants
         //Gear Ratio
         static final double kG = 1;
         //Rotational Inertial of Flywheel
         static final double kI = 0.05;
 
-        //Sample time
-        public static final double kDt = 0.010;
-
         // V = I * R + ω / Kv
         // torque = Kt * I
-
-        ShooterSim(){}
-
         private double velocity = 0.0;
 
-        //TODO Think gearing forgotten
-        private double getAcceleration(final double voltage){
-//            System.out.println(String.format("Velocity: %f, Voltage: %f", velocity, voltage));
-//            System.out.println("Accel: " + (voltage - ((velocity * kG)/(MotorConstants.MotorCIM.Kv))) * (MotorConstants.MotorCIM.Kt/(kI * MotorConstants.MotorCIM.kResistance)));
-            return (voltage - ((velocity * kG)/(MotorConstants.MotorCIM.Kv))) * (MotorConstants.MotorCIM.Kt/(kI * MotorConstants.MotorCIM.kResistance));
+        ShooterSim() {
         }
 
-        private double getVelocity(){
+        private double getAcceleration(final double voltage) {
+//            System.out.println(String.format("Velocity: %f, Voltage: %f", velocity, voltage));
+//            System.out.println("Accel: " + (voltage - ((velocity * kG)/(MotorConstants.MotorCIM.Kv))) * (MotorConstants.MotorCIM.Kt/(kI * MotorConstants.MotorCIM.kResistance)));
+            return (voltage - ((velocity * kG) / (MotorConstants.MotorCIM.Kv))) * (MotorConstants.MotorCIM.Kt / (kI * MotorConstants.MotorCIM.kResistance));
+        }
+
+        private double getVelocity() {
             return velocity;
         }
     }

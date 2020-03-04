@@ -2,40 +2,36 @@ package team1699.utils.logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.io.FileWriter;
-import java.lang.Exception;
-import java.io.IOException;
 
 public class Logger implements Runnable {
 
+    private static final String LOG_FORMAT = "[" + DriverStation.getInstance().getMatchTime() + "] - %s";
     private static Logger instance;
+    private final List<Loggable> alwaysLogged;
+    private final Queue<String> toLog;
+    private final FileWriter writer;
+    private boolean running = false;
+    private Thread thread;
+    private int ticks = 0;
+    private Logger() throws Exception {
+        alwaysLogged = new ArrayList<>();
+        toLog = new ConcurrentLinkedQueue<>();
+        writer = new FileWriter("/home/lvuser/logs/" + Timestamp.from(Instant.now()).toString() + ".txt");
+    }
 
     public Logger getInstance() throws Exception {
         if (instance == null) {
             instance = new Logger();
         }
         return instance;
-    }
-
-    private static final String LOG_FORMAT = "[" + DriverStation.getInstance().getMatchTime() + "] - %s";
-
-    private final List<Loggable> alwaysLogged;
-    private final Queue<String> toLog;
-    private boolean running = false;
-    private Thread thread;
-    private int ticks = 0;
-    private final FileWriter writer;
-
-    private Logger() throws Exception {
-        alwaysLogged = new ArrayList<>();
-        toLog = new ConcurrentLinkedQueue<>();
-        writer = new FileWriter("/home/lvuser/logs/" + Timestamp.from(Instant.now()).toString() + ".txt");
     }
 
     @Override
@@ -62,6 +58,7 @@ public class Logger implements Runnable {
 
     /**
      * Writes a message to the log once
+     *
      * @param message The message to log
      */
     public synchronized void log(String message) {
@@ -70,9 +67,10 @@ public class Logger implements Runnable {
 
     /**
      * Writes a message to the log continuously
+     *
      * @param loggable What is to be logged
      */
-    public synchronized void addContinuousMessage(Loggable loggable){
+    public synchronized void addContinuousMessage(Loggable loggable) {
         alwaysLogged.add(loggable);
     }
 

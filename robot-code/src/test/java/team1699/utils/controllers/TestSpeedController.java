@@ -2,20 +2,20 @@ package team1699.utils.controllers;
 
 //This class is used to emulate a motor controller so we can test
 //if the values being output from control loops are correct
-public class TestSpeedController extends BetterSpeedController{
+public class TestSpeedController extends BetterSpeedController {
 
-	private double speed;
-	private final int port;
+    private final int port;
+    private double speed;
 
-	public TestSpeedController(final int port){
-		this.port = port;
-	}
+    public TestSpeedController(final int port) {
+        this.port = port;
+    }
 
-	public void set(final double percent){
-		this.speed = percent;
-	}
+    public void set(final double percent) {
+        this.speed = percent;
+    }
 
-	public double get(){
-		return speed;
-	}
+    public double get() {
+        return speed;
+    }
 }

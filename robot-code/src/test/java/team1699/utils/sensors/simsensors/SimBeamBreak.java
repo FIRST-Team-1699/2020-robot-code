@@ -16,7 +16,7 @@ public class SimBeamBreak extends BeamBreak {
         return triggered;
     }
 
-    public void setTriggered(final BeamState triggered){
+    public void setTriggered(final BeamState triggered) {
         this.triggered = triggered;
     }
 }

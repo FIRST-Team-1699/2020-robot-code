@@ -10,15 +10,16 @@ package team1699.utils.sensors;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
- * Super simple wrapper function, will add addional functions as needed 
+ * Super simple wrapper function, will add addional functions as needed
  */
 public class LimitSwitch {
     private DigitalInput lswitch;
-    public LimitSwitch( int port){
+
+    public LimitSwitch(int port) {
         lswitch = new DigitalInput(port);
     }
 
-    public boolean isPressed(){
+    public boolean isPressed() {
         return lswitch.get();
     }
 }
