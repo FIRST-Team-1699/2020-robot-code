@@ -4,11 +4,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import team1699.utils.controllers.BetterSpeedController;
 
-public class TalonWrapper extends BetterSpeedController {
+public class BetterTalon extends BetterSpeedController {
 
     private final TalonSRX talon;
 
-    public TalonWrapper(final int port) {
+    public BetterTalon(final int port) {
         this.talon = new TalonSRX(port);
     }
 
@@ -16,7 +16,15 @@ public class TalonWrapper extends BetterSpeedController {
         talon.set(ControlMode.PercentOutput, percent);
     }
 
+    public void set(final ControlMode mode, final double out) {
+        talon.set(mode, out);
+    }
+
     public double get() {
         return talon.getMotorOutputPercent();
+    }
+
+    public TalonSRX getTalon(){
+        return talon;
     }
 }

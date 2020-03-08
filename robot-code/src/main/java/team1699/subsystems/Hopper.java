@@ -2,13 +2,15 @@ package team1699.subsystems;
 
 import team1699.utils.controllers.BetterSpeedController;
 import team1699.utils.sensors.BeamBreak;
+import team1699.utils.sensors.LimitSwitch;
 
 public class Hopper implements Subsystem {
 
-    public static final double FORWARD_SPEED = 1.0;
+    public static final double FORWARD_SPEED = 0.35;
     public static final double REVERSE_SPEED = -FORWARD_SPEED;
     public static final byte MAX_BALLS = 4;
-    private final BeamBreak intakeBreak, ballBreak, shooterBreak;
+    private final BeamBreak intakeBreak, ballBreak;
+    private final LimitSwitch shooterBreak;
 
     //TODO Need to figure out if the flipper is part of this subsystem or another one
     private final BetterSpeedController carrierMotor;
@@ -16,7 +18,7 @@ public class Hopper implements Subsystem {
     private byte mBallsStored;
     private boolean lock = false; //Used to make sure that we ignore the correct time the beam is closed
     //TODO Add motors
-    public Hopper(final BeamBreak intakeBreak, final BeamBreak ballBreak, final BeamBreak shooterBreak, final BetterSpeedController carrierMotor) {
+    public Hopper(final BeamBreak intakeBreak, final BeamBreak ballBreak, final LimitSwitch shooterBreak, final BetterSpeedController carrierMotor) {
         wantedState = HopperState.STOPPED;
         this.intakeBreak = intakeBreak;
         this.ballBreak = ballBreak;
@@ -75,9 +77,9 @@ public class Hopper implements Subsystem {
                 //Run forward until ball breaks shooter beam break
                 //Wait until beam is restored
                 //Repeat
-                if (shooterBreak.triggered() == BeamBreak.BeamState.CLOSED) {
+                if (!shooterBreak.isPressed()) {
                     carrierMotor.set(FORWARD_SPEED);
-                } else if (shooterBreak.triggered() == BeamBreak.BeamState.BROKEN) {
+                } else if (shooterBreak.isPressed()) {
                     carrierMotor.set(0.0);
                 }
 

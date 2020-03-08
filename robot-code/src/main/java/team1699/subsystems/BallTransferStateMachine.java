@@ -64,7 +64,7 @@ public class BallTransferStateMachine {
         this.wantedState = wantedState;
     }
 
-    enum BallTransferState {
+    public enum BallTransferState {
         INTAKING, //Intaking Balls
         SHOOTING, //Shooting all balls in hopper
         EMPTYING, //Empty hopper without the shooter due to an error

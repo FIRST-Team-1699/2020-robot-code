@@ -4,6 +4,7 @@ import team1699.utils.Utils;
 import team1699.utils.controllers.SpeedControllerGroup;
 import team1699.utils.sensors.BeamBreak;
 import team1699.utils.sensors.BetterEncoder;
+import team1699.utils.sensors.LimitSwitch;
 
 //TODO Fix
 //public class Shooter implements Subsystem{
@@ -23,7 +24,7 @@ public class Shooter {
     static final double Kv = 0.01;
     private final SpeedControllerGroup controllerGroup;
     private final BetterEncoder encoder;
-    private final BeamBreak beamBreak;
+    private final LimitSwitch beamBreak;
     double lastError = 0.0;
     double filteredGoal = 0.0;
     private double goal = 0.0; //TODO Figure out units
@@ -34,7 +35,7 @@ public class Shooter {
 
     //TODO Add a constructor so we don't have to use a group?
     //TODO Might need to switch to two motors instead of one
-    public Shooter(final SpeedControllerGroup controllerGroup, final BetterEncoder encoder, final BeamBreak beamBreak) {
+    public Shooter(final SpeedControllerGroup controllerGroup, final BetterEncoder encoder, final LimitSwitch beamBreak) {
         this.controllerGroup = controllerGroup;
         this.encoder = encoder;
         this.beamBreak = beamBreak;
@@ -52,7 +53,7 @@ public class Shooter {
             case SHOOT:
                 //TODO Determine what flipper to use
                 filteredGoal = goal;
-                if (beamBreak.triggered() == BeamBreak.BeamState.BROKEN && atGoal()) {
+                if (beamBreak.isPressed() && atGoal()) {
                     //Deploy flipper
                     flipperDeployed = true;
                 } else if (flipperDeployed && flipperDeployedTicks < 100) {
@@ -95,6 +96,21 @@ public class Shooter {
 
     public void setWantedState(final ShooterState wantedState) {
         this.wantedState = wantedState;
+        handleStateTransition(wantedState);
+    }
+
+    private void handleStateTransition(final ShooterState wantedState){
+        switch(wantedState){
+            case UNINITIALIZED:
+            case STOPPED:
+                break;
+            case RUNNING:
+                goal = 1.0;
+                break;
+            case SHOOT:
+                goal = 20.0;
+                break;
+        }
     }
 
     public ShooterState getCurrentState() {

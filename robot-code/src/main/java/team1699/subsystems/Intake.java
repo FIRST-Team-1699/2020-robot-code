@@ -5,7 +5,7 @@ import team1699.utils.controllers.BetterSpeedController;
 
 public class Intake implements Subsystem {
 
-    public static final double kIntakeSpeed = 0.0; //TODO Give value
+    public static final double kIntakeSpeed = 0.5; //TODO Give value
 
     //Start the system in an uninitialized state and set a wanted state
     private IntakeStates currentState = null;

@@ -22,7 +22,7 @@ import team1699.utils.sensors.LimeLight;
 
 public class DriveTrain extends SubsystemBase implements Subsystem {
 
-    public static final double kP = 0.0, kD = 0.0, kMinCommand = 0.0; //TODO Populate
+    public static final double kP = 0.05, kD = 0.0, kMinCommand = 0.1; //TODO Populate
     //Constants TODO Change https://docs.wpilib.org/en/latest/docs/software/examples-tutorials/trajectory-tutorial/entering-constants.html
     public static final double ksVolts = 0.22;
     public static final double kvVoltSecondsPerMeter = 1.98;
@@ -206,6 +206,10 @@ public class DriveTrain extends SubsystemBase implements Subsystem {
                 this //TODO Check
         );
         return ramseteCommand.andThen(() -> tankDriveVolts(0, 0));
+    }
+
+    public void setWantedState(final DriveState driveState){
+        wantedState = driveState;
     }
 
     //TODO Figure out if we need a state for motion profiling
