@@ -60,6 +60,24 @@ public class Robot extends TimedRobot {
         starDriveMaster = new BetterFalcon(32);
         starDriveSlave = new BetterFalcon(33);
         starDriveGroup = new SpeedControllerGroup(starDriveMaster, starDriveSlave);
+        mPortMaster = new TalonFX(32);
+        mPortMaster.setInverted(true);
+        mPortSlave1 = new TalonFX(33);
+        mPortSlave1.follow(mPortMaster);
+        mPortSlave1.setInverted(true);
+        //mPortSlave2 = new TalonFX(12);
+        //mPortSlave2.follow(mPortMaster);
+
+        //Setup starboard drive motors
+        mStarMaster = new TalonFX(30);
+        mStarMaster.setInverted(false);
+        mStarSlave1 = new TalonFX(31);
+        mStarSlave1.follow(mStarMaster);
+        mStarSlave1.setInverted(true);
+        mStarSlave1.setInverted(false);
+        //mStarSlave2 = new TalonFX(15);
+        //mStarSlave2.follow(mStarMaster);
+        //mStarSlave2.setInverted(true);
 
         //Setup drive train
         driveTrain = new DriveTrain(portDriveGroup, starDriveGroup, driveJoystick);
