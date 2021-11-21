@@ -5,7 +5,7 @@ import org.junit.Test;
 public class LoggerTest {
 
     @Test
-    public void testLoggerOutputCorrect(){
+    public void testLoggerOutputCorrect() {
 
     }
 }

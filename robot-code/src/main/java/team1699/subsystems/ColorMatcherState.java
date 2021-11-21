@@ -1,42 +1,75 @@
 package team1699.subsystems;
 
-import edu.wpi.first.wpilibj.util.Color;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
+import team1699.utils.sensors.LimitSwitch;
 
 public class ColorMatcherState {
-    private String previousColor;
-    private String currentColor;
-
-    public void ColorMatcherState()
-    {
+    private wheelState currentState;
+    private ColorMatcher currentColor;
+    private LimitSwitch hasContactSwitch;
+    public ColorMatcherState(ColorMatcher currentColor, LimitSwitch hasContactSwitch) {
         this.currentColor = currentColor;
-        this.previousColor = "Unknown";
-    } 
+        this.hasContactSwitch = hasContactSwitch;
+    }
 
-    public void Run(){
-        switch(previousColor){
+    public void run() {
+        if (!hasContactSwitch.isPressed()) {
+            currentState = wheelState.unknown;
+        } else {
+            switch (currentState) {
 
-            case "Unknown":
-                
-                break;
+                case unknown:
+                default:
+                    currentState = wheelState.initialized;
+                    break;
 
-            case "Blue":
+                case initialized:
+                    if (currentColor.update() == ColorMatcher.Color.blue) {
+                        currentState = wheelState.blue;
+                    } else if (currentColor.update() == ColorMatcher.Color.green) {
+                        currentState = wheelState.green;
+                    } else if (currentColor.update() == ColorMatcher.Color.red) {
+                        currentState = wheelState.red;
+                    } else if (currentColor.update() == ColorMatcher.Color.yellow) {
+                        currentState = wheelState.unk_yellow;
+                    }
+                    break;
 
-                break;
+                case unk_yellow:
+                    if (currentColor.update() == ColorMatcher.Color.blue) {
+                        currentState = wheelState.blue;
+                    } else if (currentColor.update() == ColorMatcher.Color.red) {
+                        currentState = wheelState.red;
+                    }
+                    break;
 
-            case "Green":
+                case norm_yellow:
+                    if (currentColor.update() == ColorMatcher.Color.blue) {
+                        currentState = wheelState.blue;
+                    }
+                    break;
 
-                break;
-
-            case "Red":
-
-                break;
-
-            case "Yellow":
-
-                break;
-
+                case blue:
+                    if (currentColor.update() == ColorMatcher.Color.green) {
+                        currentState = wheelState.green;
+                    }
+                    break;
+                case red:
+                    if (currentColor.update() == ColorMatcher.Color.yellow) {
+                        currentState = wheelState.norm_yellow;
+                    }
+                    break;
+                case green:
+                    if (currentColor.update() == ColorMatcher.Color.green) {
+                        currentState = wheelState.green;
+                    }
+                    break;
+            }
         }
     }
-} 
+
+    // private String previousColor;
+    // private String currentColor;
+    public enum wheelState {
+        unknown, initialized, unk_yellow, norm_yellow, blue, red, green
+    }
+}
